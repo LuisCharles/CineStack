@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;
 
-// Atualizado: allowedHeaders="*" garante que o navegador consiga enviar JSON para a API no Render
 @CrossOrigin(origins = "*", allowedHeaders = "*") 
 @RestController 
 @RequestMapping("/filmes")
@@ -21,8 +20,6 @@ public class FilmeController {
 
     @Autowired
     private FilmeService service; 
-
-    // --- ROTAS DA BIBLIOTECA DO USUÁRIO ---
 
     @GetMapping("/usuario/{usuarioId}")
     public List<Filme> listarPorUsuario(@PathVariable Long usuarioId) {
@@ -49,8 +46,6 @@ public class FilmeController {
         return repository.findByUsuarioIdAndVistoFalse(usuarioId);
     }
 
-    // --- ROTAS DE COMUNICAÇÃO COM O TMDB (VIA JAVA) ---
-
     @GetMapping("/search-tmdb")
     public Map<String, Object> search(@RequestParam String query) {
         return service.buscarNoTMDB(query);
@@ -66,8 +61,6 @@ public class FilmeController {
         return service.descobrirFilmes(categoria, page);
     }
 
-    // --- ROTAS DE MANIPULAÇÃO DE DADOS ---
-
     @PostMapping
     public Filme cadastrar(@RequestBody @Valid Filme filme) {
         return repository.save(filme);
@@ -80,14 +73,14 @@ public class FilmeController {
 
     @PatchMapping("/{id}/favorito")
     public Filme alternarFavorito(@PathVariable Long id) {
-        Filme filme = repository.findById(id).orElseThrow(() -> new RuntimeException("Filme não encontrado"));
+        Filme filme = repository.findById(id).orElseThrow(() -> new RuntimeException("Não encontrado"));
         filme.setFavorito(!filme.getFavorito());
         return repository.save(filme);
     }
 
     @PatchMapping("/{id}/visto")
     public Filme alternarVisto(@PathVariable Long id) {
-        Filme filme = repository.findById(id).orElseThrow(() -> new RuntimeException("Filme não encontrado"));
+        Filme filme = repository.findById(id).orElseThrow(() -> new RuntimeException("Não encontrado"));
         filme.setVisto(!filme.getVisto());
         return repository.save(filme);
     }

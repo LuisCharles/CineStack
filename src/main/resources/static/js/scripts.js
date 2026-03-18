@@ -1,5 +1,6 @@
-const API_BASE = "http://localhost:8080/filmes";
-const API_AUTH = "http://localhost:8080/auth";
+// Exemplo (SUBSTITUA PELO SEU LINK DO RENDER):
+const API_BASE = "https://cinestack-api.onrender.com/filmes";
+const API_AUTH = "https://cinestack-api.onrender.com/auth";
 const CAPA_PADRAO = "https://placehold.co/400x600/12101f/a855f7?text=CineStack";
 
 let filmesDoUsuario = [];
