@@ -5,7 +5,7 @@ import jakarta.validation.constraints.*;
 import lombok.Data;
 
 @Entity
-@Data // O Lombok cria os Getters e Setters automaticamente
+@Data
 public class Filme {
 
     @Id
@@ -15,6 +15,7 @@ public class Filme {
     @NotBlank(message = "O título é obrigatório")
     private String titulo;
 
+    @Column(columnDefinition = "TEXT")
     private String sinopse;
 
     @Min(1888)
@@ -24,4 +25,13 @@ public class Filme {
     private Double nota;
 
     private String urlCapa;
+
+    @ManyToOne
+    @JoinColumn(name = "usuario_id")
+    private Usuario usuario;
+
+    private Boolean favorito = false;
+    
+    // NOVO: Campo para controlar se o filme já foi assistido (Padrão: falso)
+    private Boolean visto = false; 
 }

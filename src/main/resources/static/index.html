@@ -15,12 +15,9 @@
 <div id="tela-login" class="container d-flex align-items-center justify-content-center" style="height: 100vh;">
     <div class="glass-card p-5 text-center" style="max-width: 420px; width: 100%;">
         <h1 class="logo-silver mb-4">CINESTACK<span>.</span></h1>
-        
         <div id="alerta-auth" class="alert mb-3 p-2 small" style="display: none; background: rgba(220, 53, 69, 0.2); border: 1px solid #dc3545; color: white;"></div>
-
         <div id="form-auth">
             <h5 id="auth-titulo" class="text-white mb-4">Acessar Biblioteca</h5>
-            
             <div id="campo-nome-real" class="mb-3" style="display: none;">
                 <input type="text" id="regNomeReal" class="search-input w-100" placeholder="Seu Nome Completo">
             </div>
@@ -30,9 +27,7 @@
             <div class="mb-4">
                 <input type="password" id="passAuth" class="search-input w-100" placeholder="Senha">
             </div>
-
             <button id="btn-auth" class="btn-action-add w-100" onclick="autenticar()">ENTRAR</button>
-            
             <p class="mt-4 small text-white">
                 <span id="auth-pergunta" class="opacity-50">Não tem conta?</span> 
                 <a href="javascript:void(0)" onclick="alternarModoAuth()" id="auth-link" class="text-white fw-bold text-decoration-none ms-1">Cadastre-se</a>
@@ -42,6 +37,7 @@
 </div>
 
 <div id="app-catalogo" style="display: none;">
+    
     <nav class="navbar fixed-top glass-nav px-4">
         <div class="container-fluid d-flex justify-content-between align-items-center">
             <span class="logo-silver" onclick="logout()">CINESTACK<span>.</span></span>
@@ -54,8 +50,38 @@
     </nav>
 
     <main class="container content-wrapper">
-        <div id="header-dynamic"></div>
-        <div class="movie-grid" id="gridFilmes"></div>
+        
+        <div class="d-flex gap-3 mb-5 border-bottom border-secondary pb-3">
+            <button id="btn-aba-biblioteca" class="tab-btn active" onclick="mudarAba('biblioteca')">Minha Biblioteca</button>
+            <button id="btn-aba-descobrir" class="tab-btn" onclick="mudarAba('descobrir')">🌍 Descobrir</button>
+        </div>
+
+        <div id="secao-biblioteca">
+            <div id="header-dynamic"></div>
+            <div class="filter-bar" id="barra-filtros" style="display: none;">
+                <button class="filter-pill active" onclick="aplicarFiltro('todos', this)">Todos os Filmes</button>
+                <button class="filter-pill" onclick="aplicarFiltro('recentes', this)">🆕 Últimos Adicionados</button>
+                <button class="filter-pill" onclick="aplicarFiltro('favoritos', this)">⭐ Apenas Favoritos</button>
+                <button class="filter-pill" onclick="aplicarFiltro('nao-vistos', this)">⏳ Para Ver</button>
+                <button class="filter-pill" onclick="aplicarFiltro('vistos', this)">👁️ Já Vistos</button>
+            </div>
+            <div class="movie-grid" id="gridFilmes"></div>
+        </div>
+
+        <div id="secao-descobrir" style="display: none;">
+            <div class="mb-5 border-start border-4 border-purple ps-4">
+                <h1 class="fw-bold display-4 hero-title text-white">Aba <span class="text-purple-gradient">Descobrir</span></h1>
+                <p class="text-white opacity-75">Encontre novos filmes em alta, lançamentos e os mais bem avaliados.</p>
+            </div>
+            <div class="filter-bar">
+                <button class="filter-pill-descobrir active" onclick="aplicarFiltroDescobrir('popular', this)">🔥 Em Alta</button>
+                <button class="filter-pill-descobrir" onclick="aplicarFiltroDescobrir('top_rated', this)">🏆 Mais Votados</button>
+                <button class="filter-pill-descobrir" onclick="aplicarFiltroDescobrir('upcoming', this)">📅 Lançamentos</button>
+            </div>
+            <div class="movie-grid" id="gridDescobrir"></div>
+            <div id="paginacao-descobrir" class="d-flex justify-content-center flex-wrap gap-2 mt-5 mb-4"></div>
+        </div>
+
     </main>
 </div>
 
@@ -66,7 +92,7 @@
                 <button type="button" class="btn-close-neon" data-bs-dismiss="modal">&times;</button>
                 <div class="row g-0">
                     <div class="col-lg-5">
-                        <img id="modal-foto" src="" class="img-fluid h-100 w-100 object-fit-cover">
+                        <img id="modal-foto" src="" class="img-fluid h-100 w-100 object-fit-cover" style="border-radius: 30px 0 0 30px;">
                     </div>
                     <div class="col-lg-7 p-5 text-white">
                         <h1 id="modal-titulo" class="display-4 fw-bold mb-2"></h1>
@@ -82,7 +108,14 @@
                         <p id="modal-sinopse" class="sinopse-text"></p>
                         <h6 class="label-purple mt-4">ELENCO PRINCIPAL</h6>
                         <div id="modal-elenco" class="d-flex flex-wrap gap-2"></div>
-                        <div id="modal-footer-actions" class="mt-5"></div>
+                        
+                        <div class="mt-5 d-flex flex-column gap-2">
+                            <div id="modal-footer-actions"></div>
+                            <a id="modal-trailer" href="#" target="_blank" class="btn-action-trailer w-100 text-center text-decoration-none" style="display: none;">
+                                <i class="fab fa-youtube me-2"></i> ASSISTIR TRAILER
+                            </a>
+                        </div>
+                        
                     </div>
                 </div>
             </div>

@@ -7,8 +7,15 @@ import java.util.List;
 
 @Repository
 public interface FilmeRepository extends JpaRepository<Filme, Long> {
-    // Aqui o Spring já nos dá métodos como save(), findAll(), deleteById()...
-
-    // O Spring Data JPA cria a query sozinho pelo nome do método!
-    List<Filme> findByTituloContainingIgnoreCase(String titulo);
+    
+    List<Filme> findByUsuarioId(Long usuarioId);
+    
+    List<Filme> findByUsuarioIdOrderByIdDesc(Long usuarioId);
+    
+    List<Filme> findByUsuarioIdAndFavoritoTrue(Long usuarioId);
+    
+    // Busca os filmes que já foram vistos ou os que faltam ver
+    List<Filme> findByUsuarioIdAndVistoTrue(Long usuarioId);
+    
+    List<Filme> findByUsuarioIdAndVistoFalse(Long usuarioId);
 }
