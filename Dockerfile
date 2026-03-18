@@ -4,8 +4,8 @@ COPY . .
 RUN mvn clean package -DskipTests
 
 # Estágio 2: Execução
-FROM openjdk:17-jdk-slim
-# O comando abaixo usa um asterisco (*) para pegar qualquer arquivo .jar na pasta target
+# Trocamos para a imagem do Eclipse Temurin, que é super estável e fácil de encontrar
+FROM eclipse-temurin:17-jdk-alpine
 COPY --from=build /target/*.jar app.jar
 EXPOSE 8080
 ENTRYPOINT ["java","-jar","app.jar"]
