@@ -10,7 +10,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;
 
-@CrossOrigin(origins = "*") 
+// Atualizado: allowedHeaders="*" garante que o navegador consiga enviar JSON para a API no Render
+@CrossOrigin(origins = "*", allowedHeaders = "*") 
 @RestController 
 @RequestMapping("/filmes")
 public class FilmeController {
@@ -20,6 +21,8 @@ public class FilmeController {
 
     @Autowired
     private FilmeService service; 
+
+    // --- ROTAS DA BIBLIOTECA DO USUÁRIO ---
 
     @GetMapping("/usuario/{usuarioId}")
     public List<Filme> listarPorUsuario(@PathVariable Long usuarioId) {
@@ -36,7 +39,6 @@ public class FilmeController {
         return repository.findByUsuarioIdAndFavoritoTrue(usuarioId);
     }
 
-    // NOVAS ROTAS DE FILTROS: Vistos e Não Vistos
     @GetMapping("/usuario/{usuarioId}/vistos")
     public List<Filme> listarVistos(@PathVariable Long usuarioId) {
         return repository.findByUsuarioIdAndVistoTrue(usuarioId);
@@ -46,6 +48,8 @@ public class FilmeController {
     public List<Filme> listarNaoVistos(@PathVariable Long usuarioId) {
         return repository.findByUsuarioIdAndVistoFalse(usuarioId);
     }
+
+    // --- ROTAS DE COMUNICAÇÃO COM O TMDB (VIA JAVA) ---
 
     @GetMapping("/search-tmdb")
     public Map<String, Object> search(@RequestParam String query) {
@@ -61,6 +65,8 @@ public class FilmeController {
     public Map<String, Object> descobrir(@PathVariable String categoria, @RequestParam(defaultValue = "1") int page) {
         return service.descobrirFilmes(categoria, page);
     }
+
+    // --- ROTAS DE MANIPULAÇÃO DE DADOS ---
 
     @PostMapping
     public Filme cadastrar(@RequestBody @Valid Filme filme) {
@@ -79,7 +85,6 @@ public class FilmeController {
         return repository.save(filme);
     }
 
-    // NOVA ROTA: Inverte o status de "visto"
     @PatchMapping("/{id}/visto")
     public Filme alternarVisto(@PathVariable Long id) {
         Filme filme = repository.findById(id).orElseThrow(() -> new RuntimeException("Filme não encontrado"));
