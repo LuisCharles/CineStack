@@ -1,6 +1,5 @@
-// Exemplo (SUBSTITUA PELO SEU LINK DO RENDER):
-const API_BASE = "https://cinestack-api.onrender.com/filmes";
-const API_AUTH = "https://cinestack-api.onrender.com/auth";
+const API_BASE = "https://cinestack.onrender.com/filmes";
+const API_AUTH = "https://cinestack.onrender.com/auth";
 const CAPA_PADRAO = "https://placehold.co/400x600/12101f/a855f7?text=CineStack";
 
 let filmesDoUsuario = [];
